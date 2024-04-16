@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="search-engine-tool",
-    version="0.1.0",
+    version="0.3.0",
     packages=find_packages(),
     install_requires=[
         "selenium"
@@ -10,7 +10,7 @@ setup(
 
     author="bluefrog",
     author_email="bluefrog.wu@gmail.com",
-    description="搜索引擎API Bing / Google / Yahoo / Baidu",
+    description="搜索引擎API Bing / Google / Yahoo / Baidu / Sogou / 360 ",
     long_description=open("README.md").read(),
     long_description_content_type="text/markdown",
     license="MIT",

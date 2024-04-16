@@ -46,10 +46,12 @@ Google (需要调用方自身能够访问)
 Yahoo
 ```
 
-# todo 
+# Todo 
 ```
 1 处理人机验证
-2 
-
+2 支持翻页参数
+3 支持 Badiu / Sogou / so.cn 国内搜索网站
+4 百度百科
+5 wikipedia 支持
 ```
 
