@@ -4,6 +4,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from urllib.parse import urlencode
 
+
 def run():
     # print("aaa")
     # exit(0)
@@ -34,51 +35,63 @@ def run():
     # 初始化浏览器
     driver = webdriver.Chrome(options=options)
     # 访问网页
-    # `https://www.bing.com/search?form=QBRE&q=${encodeURIComponent( query)}&cc=US`
+    # `https://search.yahoo.com/search?p=${encodeURIComponent(query)}&ei=UTF-8&fr=fp-tts`
     keyword = "兰州拉面"
     query = {
-        "q": keyword
+        "p": keyword
     }
-    print("https://www.bing.com/search?form=QBRE&%s&cc=US" % urlencode(query))
+    print("https://search.yahoo.com/search?%s&ei=UTF-8&fr=fp-tts" % urlencode(query))
     # driver.get('https://baidu.com')
     # exit(0)
-    driver.get("https://www.bing.com/search?form=QBRE&%s&cc=US" % urlencode(query))
+    driver.get("https://search.yahoo.com/search?%s&ei=UTF-8&fr=fp-tts" % urlencode(query))
     # 隐式等待 10s 通过设定的时长等待页面元素加载完成，再执行下面的代码，如果超过设定时间还未加载完成，则继续执行下面的代码
     driver.implicitly_wait(10)
-    #time.sleep(1)
+    # time.sleep(1)
     # 打印标题
-    #print(driver.title)
-    driver.save_screenshot("./bing.png")
+    # print(driver.title)
+    driver.save_screenshot("./yahoo.png")
     
     # print(driver.find_element(By.ID, "#b_results"))
     # elements = driver.find_elements(By.CSS_SELECTOR, "#b_results .b_algo")
     # elements = driver.find_elements(By.CLASS_NAME, ".b_algo")
-    element = driver.find_element(By.ID, "b_results")
+    # element = driver.find_element(By.ID, "b_results")
     # print("aaa:" + element.get_attribute("innerHTML"))
-    elements = element.find_elements(By.CLASS_NAME, "b_algo")
+    elements = driver.find_elements(By.CLASS_NAME, "algo")
     print(len(elements))
     # print(elements)
     for e in elements:
-        #print("text:" + e.get_attribute("innerHTML"))
-        p = e.find_element(By.CLASS_NAME, "b_caption").find_element(By.TAG_NAME, "p")
-        #print("text:" + p.get_attribute("innerHTML"))
-        print("text:" + p.get_attribute("textContent"))
-        #print(e.find_element(By.CLASS_NAME, "b_caption").text)
-        a = e.find_element(By.TAG_NAME, "h2").find_element(By.TAG_NAME, "a")
+        # print("text:" + e.get_attribute("innerHTML"))
+        #p = e.find_element(By.CLASS_NAME, "fc-refblack")
+        # 处理 vedio 行
+        try:
+            p = e.find_element(By.CLASS_NAME, "compText")
+            # print("text:" + p.get_attribute("innerHTML"))
+            print("text:" + p.get_attribute("textContent"))
+        except Exception as e:
+            continue
+        # print(e.find_element(By.CLASS_NAME, "b_caption").text)
+        a = e.find_element(By.TAG_NAME, "h3").find_element(By.TAG_NAME, "a")
         print("href:" + a.get_attribute("href"))
-        print("title:" + a.get_attribute("textContent"))
+        print("title:" + a.get_attribute("aria-label"))
         # print(a.text)
     
-    #         const abstractElement = li.querySelector(".b_caption > p");
-    #         const linkElement = li.querySelector("a");
-    #         const href = linkElement.getAttribute("href");
-    #         const title = linkElement.textContent;
+    # #      const liElements = Array.from(
+    #     document.querySelector(".searchCenterMiddle").childNodes
+    #   );
+    #   const firstFiveLiElements = liElements.slice(0, 5);
+    #   return firstFiveLiElements.map((li) => {
+    #     const compTextElement = li.querySelector(".compText");
+    #     const linkElement = li.querySelector("a");
+    #     const href = linkElement.getAttribute("href");
+    #     const title = linkElement.getAttribute("aria-label");
     #
-    #         const abstract = abstractElement ? abstractElement.textContent : "";
-    #         return { href, title, abstract };
-    #time.sleep(10)
+    #     const abstract = compTextElement ? compTextElement.textContent : "";
+    #     return { href, title, abstract };
+    #   });
+    # time.sleep(10)
     # 关闭浏览器
     driver.close()
+
 
 if __name__ == '__main__':
     run()
